@@ -1,0 +1,54 @@
+﻿<Window x:Class="HomeWork.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomeWork"
+        xmlns:vm="clr-namespace:HomeWork.ViewModel"
+        mc:Ignorable="d"
+        DataContext="{DynamicResource viewModel}"
+        Title="MainWindow" Height="720" Width="1280">
+    <Window.Resources>
+        <vm:MainWindowVM x:Key="viewModel"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Фильтры" Height="25" Width="60" HorizontalAlignment="Left" Margin="10 10 0 10 " Click="Open"/>
+
+        <Grid Grid.Row="1" Visibility="Collapsed" x:Name="Panel" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Height="25" Width="100" Margin="10" Text="Производители: " />
+                <ComboBox Height="25" Width="100" Margin="10" ItemsSource="{Binding ListManufacturer}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedManufacturer}"/>
+                <TextBlock Height="25" Width="100" Margin="10 0 0 0" Text="Категории: "/>
+                <ComboBox Height="25" Width="100" Margin="10" ItemsSource="{Binding ListCatgory}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedCategory}"/>
+                <Button Height="25" Width="100" Margin="10" Content="Применить" Command="{Binding Apply}"/>
+                <Button Height="25" Width="100" Margin="10" Content="Сбросить" Command="{Binding Reset}"/>
+            </StackPanel>
+            <Button Height="25" Width="100" Grid.Column="2" Content="Закрыть" Margin="10" Click="Close"/>
+        </Grid>
+            
+            
+            
+       
+        <ListView ItemsSource="{Binding ListGood}" Grid.Row="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Название" Width="300"  DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Категория" Width="100"  DisplayMemberBinding="{Binding IdCategoryNavigation.Title}"/>
+                    <GridViewColumn Header="Производитель" Width="100"  DisplayMemberBinding="{Binding IdManufacturerNavigation.Title}"/>
+                    <GridViewColumn Header="Цена" Width="100"  DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn Header="Скидка" Width="100"  DisplayMemberBinding="{Binding StringFormat={}{0}%, Path=Discount}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
